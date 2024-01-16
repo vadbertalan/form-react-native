@@ -56,7 +56,7 @@ const initialValidationSchema = Yup.object({
   ),
   serverPath: Yup.string()
     .matches(
-      /^[a-zA-Z0-9]+$/,
+      /^[a-zA-Z0-9/]+$/,
       'Must be a valid server path (alphanumeric, `/`)',
     )
     .max(
