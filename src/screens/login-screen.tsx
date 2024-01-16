@@ -1,5 +1,5 @@
 import React, {FC, useCallback} from 'react';
-import {Button, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
 
@@ -11,7 +11,7 @@ import {
   DEFAULT_SERVER_PATH,
   DEFAULT_SERVER_PORT,
 } from '../services/api-client';
-import {Switch, Text} from '@rneui/base';
+import {Button, Switch, Text} from '@rneui/base';
 import {COLORS, METRICS} from '../style/common-styles';
 import {AccountTypePicker} from '../components/account-type-picker';
 import {StyledInput} from '../components/styled-input';
