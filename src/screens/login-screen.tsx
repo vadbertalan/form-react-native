@@ -33,16 +33,14 @@ const initialValues: LoginFormData = {
 };
 
 const initialValidationSchema = Yup.object({
-  accountType: Yup.string()
-    .required('Currency is required')
-    .oneOf(Object.values(LoginAccountType)),
+  accountType: Yup.string().oneOf(Object.values(LoginAccountType)),
   username: Yup.string()
     .required('Username is mandatory')
     .max(
       USERNAME_INPUT_MAX_LENGTH,
       `Must be ${USERNAME_INPUT_MAX_LENGTH} characters or less`,
     )
-    .email(),
+    .email('Must have valid email format'),
   password: Yup.string()
     .required('Password is mandatory')
     .max(
@@ -54,7 +52,10 @@ const initialValidationSchema = Yup.object({
     `Must be ${SERVER_ADDRESS_INPUT_MAX_LENGTH} characters or less`,
   ),
   serverPath: Yup.string()
-    .matches(/[a-zA-Z0-9/]+/, 'Must be a valid server path (alphanumeric, `/`)')
+    .matches(
+      /^[a-zA-Z0-9]+$/,
+      'Must be a valid server path (alphanumeric, `/`)',
+    )
     .max(
       SERVER_PATH_INPUT_MAX_LENGTH,
       `Must be ${SERVER_PATH_INPUT_MAX_LENGTH} characters or less`,
@@ -123,6 +124,7 @@ export const LoginScreen: FC = () => {
           maxLength={USERNAME_INPUT_MAX_LENGTH + 1}
           onChangeText={handleChange('username')}
           errorMessage={errors.username}
+          placeholder="Name@example.com"
         />
 
         <Input
@@ -132,6 +134,7 @@ export const LoginScreen: FC = () => {
           onChangeText={handleChange('password')}
           errorMessage={errors.password}
           secureTextEntry
+          placeholder="Required"
         />
 
         <Input
@@ -140,6 +143,7 @@ export const LoginScreen: FC = () => {
           maxLength={SERVER_ADDRESS_INPUT_MAX_LENGTH + 1}
           onChangeText={handleChange('serverAddress')}
           errorMessage={errors.serverAddress}
+          placeholder="example.com"
         />
 
         {values.accountType === LoginAccountType.Advanced && (
@@ -150,6 +154,7 @@ export const LoginScreen: FC = () => {
               maxLength={SERVER_PATH_INPUT_MAX_LENGTH + 1}
               onChangeText={handleChange('serverPath')}
               errorMessage={errors.serverPath}
+              placeholder="/calendars/user"
             />
 
             <View style={styles.portContainer}>
