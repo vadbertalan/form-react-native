@@ -11,9 +11,10 @@ import {
   DEFAULT_SERVER_PATH,
   DEFAULT_SERVER_PORT,
 } from '../services/api-client';
-import {Input, Switch, Text} from '@rneui/base';
-import {METRICS} from '../style/common-styles';
+import {Switch, Text} from '@rneui/base';
+import {COLORS, METRICS} from '../style/common-styles';
 import {AccountTypePicker} from '../components/account-type-picker';
+import {StyledInput} from '../components/styled-input';
 
 const SSL_PORT = 443;
 
@@ -129,7 +130,7 @@ export const LoginScreen: FC = () => {
           selectedType={values.accountType}
         />
 
-        <Input
+        <StyledInput
           label={'User Name:'}
           value={values.username}
           maxLength={USERNAME_INPUT_MAX_LENGTH + 1}
@@ -138,7 +139,7 @@ export const LoginScreen: FC = () => {
           placeholder="Name@example.com"
         />
 
-        <Input
+        <StyledInput
           label={'Password:'}
           value={values.password}
           maxLength={PASSWORD_INPUT_MAX_LENGTH + 1}
@@ -148,7 +149,7 @@ export const LoginScreen: FC = () => {
           placeholder="Required"
         />
 
-        <Input
+        <StyledInput
           label={'Server Address:'}
           value={values.serverAddress}
           maxLength={SERVER_ADDRESS_INPUT_MAX_LENGTH + 1}
@@ -159,7 +160,7 @@ export const LoginScreen: FC = () => {
 
         {values.accountType === LoginAccountType.Advanced && (
           <>
-            <Input
+            <StyledInput
               label={'Server Path:'}
               value={values.serverPath}
               maxLength={SERVER_PATH_INPUT_MAX_LENGTH + 1}
@@ -169,7 +170,7 @@ export const LoginScreen: FC = () => {
             />
 
             <View style={styles.portContainer}>
-              <Input
+              <StyledInput
                 disabled={values.useSsl}
                 keyboardType="number-pad"
                 label={'Port:'}
@@ -178,6 +179,7 @@ export const LoginScreen: FC = () => {
                 onChangeText={handleChange('port')}
                 errorMessage={errors.port}
                 containerStyle={styles.portInputContainer}
+                onFocus={() => {}}
               />
 
               <View style={styles.switchContainer}>
@@ -185,13 +187,19 @@ export const LoginScreen: FC = () => {
                 <Switch
                   value={values.useSsl}
                   onValueChange={toggleUseSslCheckbox}
+                  color={COLORS.primary}
                 />
               </View>
             </View>
           </>
         )}
 
-        <Button title={'Submit'} onPress={proxySubmit} disabled={!isValid} />
+        <Button
+          title={'Submit'}
+          onPress={proxySubmit}
+          disabled={!isValid}
+          color={COLORS.primary}
+        />
       </ScrollView>
     </ScreenContainer>
   );
