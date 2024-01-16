@@ -50,10 +50,16 @@ const initialValidationSchema = Yup.object({
       PASSWORD_INPUT_MAX_LENGTH,
       `Must be ${PASSWORD_INPUT_MAX_LENGTH} characters or less`,
     ),
-  serverAddress: Yup.string().max(
-    SERVER_ADDRESS_INPUT_MAX_LENGTH,
-    `Must be ${SERVER_ADDRESS_INPUT_MAX_LENGTH} characters or less`,
-  ),
+  serverAddress: Yup.string()
+    .max(
+      SERVER_ADDRESS_INPUT_MAX_LENGTH,
+      `Must be ${SERVER_ADDRESS_INPUT_MAX_LENGTH} characters or less`,
+    )
+    .matches(
+      // Got hostname regex from: https://stackoverflow.com/a/106223/7882342
+      /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$/,
+      'Must be a valid hostname',
+    ),
   serverPath: Yup.string()
     .matches(
       /^[a-zA-Z0-9/]+$/,
