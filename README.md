@@ -1,8 +1,16 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Description
 
-# Getting Started
+This is a simple app, that has a form, that can be used to log in into a server.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Screenshots
+
+### Android
+<img src='https://github.com/vadbertalan/form-react-native/blob/main/android-demo-screenshot.png?raw=true' width=300>
+
+### iOS
+<img src='https://github.com/vadbertalan/form-react-native/blob/main/ios-demo-screenshot.png?raw=true' width=300>
+
+# Running
 
 ## Step 1: Start the Metro Server
 
