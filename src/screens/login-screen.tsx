@@ -17,6 +17,9 @@ import {AccountTypePicker} from '../components/account-type-picker';
 
 const SSL_PORT = 443;
 
+const PORT_MIN = 0;
+const PORT_MAX = 65353;
+
 const USERNAME_INPUT_MAX_LENGTH = 50;
 const PASSWORD_INPUT_MAX_LENGTH = 50;
 const SERVER_ADDRESS_INPUT_MAX_LENGTH = 50;
@@ -60,7 +63,9 @@ const initialValidationSchema = Yup.object({
       SERVER_PATH_INPUT_MAX_LENGTH,
       `Must be ${SERVER_PATH_INPUT_MAX_LENGTH} characters or less`,
     ),
-  port: Yup.number().min(1).max(65353),
+  port: Yup.number()
+    .min(PORT_MIN, `Port must be at least ${PORT_MIN}`)
+    .max(PORT_MAX, `Port must be at least ${PORT_MAX}`),
   useSsl: Yup.bool().required(),
 });
 
