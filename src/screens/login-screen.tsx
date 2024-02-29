@@ -2,6 +2,7 @@ import React, {FC, useCallback} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
+import {Button, Switch, Text} from '@rneui/base';
 
 import {ScreenContainer} from '../components/screen-container';
 import {LoginAccountType, LoginFormData} from '../models/login-payload';
@@ -11,10 +12,10 @@ import {
   DEFAULT_SERVER_PATH,
   DEFAULT_SERVER_PORT,
 } from '../services/api-client';
-import {Button, Switch, Text} from '@rneui/base';
 import {COLORS, METRICS} from '../style/common-styles';
 import {AccountTypePicker} from '../components/account-type-picker';
 import {StyledInput} from '../components/styled-input';
+import {KeyboardAvoidingContainer} from '../components/keyboard-avoiding-container';
 
 const SSL_PORT = 443;
 
@@ -123,84 +124,85 @@ export const LoginScreen: FC = () => {
 
   return (
     <ScreenContainer>
-      <ScrollView style={styles.scrollViewContainer}>
-        <Text style={styles.label}>Account type:</Text>
-        <AccountTypePicker
-          onNewTypeSelected={setAccountType}
-          selectedType={values.accountType}
-        />
+      <KeyboardAvoidingContainer>
+        <ScrollView style={styles.scrollViewContainer}>
+          <Text style={styles.label}>Account type:</Text>
+          <AccountTypePicker
+            onNewTypeSelected={setAccountType}
+            selectedType={values.accountType}
+          />
 
-        <StyledInput
-          label={'User Name:'}
-          value={values.username}
-          maxLength={USERNAME_INPUT_MAX_LENGTH + 1}
-          onChangeText={handleChange('username')}
-          errorMessage={errors.username}
-          placeholder="Name@example.com"
-        />
+          <StyledInput
+            label={'User Name:'}
+            value={values.username}
+            maxLength={USERNAME_INPUT_MAX_LENGTH + 1}
+            onChangeText={handleChange('username')}
+            errorMessage={errors.username}
+            placeholder="Name@example.com"
+          />
 
-        <StyledInput
-          label={'Password:'}
-          value={values.password}
-          maxLength={PASSWORD_INPUT_MAX_LENGTH + 1}
-          onChangeText={handleChange('password')}
-          errorMessage={errors.password}
-          secureTextEntry
-          placeholder="Required"
-        />
+          <StyledInput
+            label={'Password:'}
+            value={values.password}
+            maxLength={PASSWORD_INPUT_MAX_LENGTH + 1}
+            onChangeText={handleChange('password')}
+            errorMessage={errors.password}
+            secureTextEntry
+            placeholder="Required"
+          />
 
-        <StyledInput
-          label={'Server Address:'}
-          value={values.serverAddress}
-          maxLength={SERVER_ADDRESS_INPUT_MAX_LENGTH + 1}
-          onChangeText={handleChange('serverAddress')}
-          errorMessage={errors.serverAddress}
-          placeholder="example.com"
-        />
+          <StyledInput
+            label={'Server Address:'}
+            value={values.serverAddress}
+            maxLength={SERVER_ADDRESS_INPUT_MAX_LENGTH + 1}
+            onChangeText={handleChange('serverAddress')}
+            errorMessage={errors.serverAddress}
+            placeholder="example.com"
+          />
 
-        {values.accountType === LoginAccountType.Advanced && (
-          <>
-            <StyledInput
-              label={'Server Path:'}
-              value={values.serverPath}
-              maxLength={SERVER_PATH_INPUT_MAX_LENGTH + 1}
-              onChangeText={handleChange('serverPath')}
-              errorMessage={errors.serverPath}
-              placeholder="/calendars/user"
-            />
-
-            <View style={styles.portContainer}>
+          {values.accountType === LoginAccountType.Advanced && (
+            <>
               <StyledInput
-                disabled={values.useSsl}
-                keyboardType="number-pad"
-                label={'Port:'}
-                value={String(values.useSsl ? SSL_PORT : values.port)}
+                label={'Server Path:'}
+                value={values.serverPath}
                 maxLength={SERVER_PATH_INPUT_MAX_LENGTH + 1}
-                onChangeText={handleChange('port')}
-                errorMessage={errors.port}
-                containerStyle={styles.portInputContainer}
-                onFocus={() => {}}
+                onChangeText={handleChange('serverPath')}
+                errorMessage={errors.serverPath}
+                placeholder="/calendars/user"
               />
 
-              <View style={styles.switchContainer}>
-                <Text style={styles.useSslText}>Use SSL</Text>
-                <Switch
-                  value={values.useSsl}
-                  onValueChange={toggleUseSslCheckbox}
-                  color={COLORS.primary}
+              <View style={styles.portContainer}>
+                <StyledInput
+                  disabled={values.useSsl}
+                  keyboardType="number-pad"
+                  label={'Port:'}
+                  value={String(values.useSsl ? SSL_PORT : values.port)}
+                  maxLength={SERVER_PATH_INPUT_MAX_LENGTH + 1}
+                  onChangeText={handleChange('port')}
+                  errorMessage={errors.port}
+                  containerStyle={styles.portInputContainer}
                 />
-              </View>
-            </View>
-          </>
-        )}
 
-        <Button
-          title={'Submit'}
-          onPress={proxySubmit}
-          disabled={!isValid}
-          color={COLORS.primary}
-        />
-      </ScrollView>
+                <View style={styles.switchContainer}>
+                  <Text style={styles.useSslText}>Use SSL</Text>
+                  <Switch
+                    value={values.useSsl}
+                    onValueChange={toggleUseSslCheckbox}
+                    color={COLORS.primary}
+                  />
+                </View>
+              </View>
+            </>
+          )}
+
+          <Button
+            title="Submit"
+            onPress={proxySubmit}
+            disabled={!isValid}
+            color={COLORS.primary}
+          />
+        </ScrollView>
+      </KeyboardAvoidingContainer>
     </ScreenContainer>
   );
 };
